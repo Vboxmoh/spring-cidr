@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Recuperation du code
-        uses: action/checkout@v3
+        uses: actions/checkout@v3
         with:
           username: ${{ secrets.mohajochen }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
