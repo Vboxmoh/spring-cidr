@@ -22,19 +22,19 @@ jobs:
           push: true
           tags: ${{ secrets.mohajochen }}/spring-cicd:latest
 
-deploy:
-  runs-on: ubuntu-latest
-  needs: build-test-push
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-test-push
 
-  steps:
-    - name: Deploiement sur EC2 AWS via SSH
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ubuntu
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          docker pull ${{ secrets.mohajochen }}/spring-cicd:latest
-          docker stop spring-app || true
-          docker rm spring-app || true
-          docker run -d --name spring-app -p 8080:8080 ${{ secrets.mohajochen }}/spring-cicd:latest
+    steps:
+      - name: Deploiement sur EC2 AWS via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.mohajochen }}/spring-cicd:latest
+            docker stop spring-app || true
+            docker rm spring-app || true
+            docker run -d --name spring-app -p 8080:8080 ${{ secrets.mohajochen }}/spring-cicd:latest
